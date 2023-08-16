@@ -10,6 +10,8 @@ const getAdmin = (req, res) => {
   });
 };
 
+
+
 const getSingleAdmin = (req, res) => {
   //   const str = `Select admin_name from admin where admin_id = ${req.params.id}`
   //   res.send(req.params.id);
