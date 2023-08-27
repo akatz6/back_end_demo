@@ -1,5 +1,6 @@
 const express = require("express");
 const adminRoutes = require("./src/routes/adminRoutes");
+const playerRoutes = require("./src/routes/playerRoutes");
 const app = express();
 const PORT = 3000;
 
@@ -10,3 +11,4 @@ app.listen(PORT, () => {
 });
 
 app.use("/api", adminRoutes);
+app.use("/player", playerRoutes);
