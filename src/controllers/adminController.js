@@ -1,8 +1,14 @@
 const pool = require("../../db");
 const bcrypt = require("bcrypt");
+<<<<<<< HEAD
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
+=======
+const dotenv = require("dotenv")
+dotenv.config()
+const jwt = require("jsonwebtoken")
+>>>>>>> 69f431d (update)
 
 const getAdmin = (req, res) => {
   pool.query("Select admin_name from admin", (error, results) => {
@@ -15,8 +21,6 @@ const getAdmin = (req, res) => {
 };
 
 const getSingleAdmin = (req, res) => {
-  //   const str = `Select admin_name from admin where admin_id = ${req.params.id}`
-  //   res.send(req.params.id);
   pool.query(
     "Select * from admin where admin_id = $1",
     [req.params.id],
@@ -55,6 +59,7 @@ const newAdmin = async (req, res) => {
   });
 };
 
+<<<<<<< HEAD
 const login = async (req, res) => {
   const findPassword = `Select admin_password from admin where admin_name = '${req.body.admin_name}'`;
   let password = "";
