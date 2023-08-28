@@ -1,9 +1,15 @@
 const pool = require("../../db");
 const bcrypt = require("bcrypt");
+<<<<<<< HEAD
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
+=======
+const dotenv = require("dotenv")
+dotenv.config()
+const jwt = require("jsonwebtoken")
+>>>>>>> 69f431d (update)
 
 const getAdmin = (req, res) => {
   pool.query("Select admin_name from admin", (error, results) => {
@@ -81,8 +87,6 @@ const login = async (req, res) => {
       return res.status(200).json(accessToken);
     }
     return res.status(400).send(match);
-  });
-};
 
 module.exports = {
   getAdmin,
