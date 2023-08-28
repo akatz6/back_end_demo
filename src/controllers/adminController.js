@@ -4,19 +4,18 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
+
 const getAdmin = (req, res) => {
   pool.query("Select admin_name from admin", (error, results) => {
     if (error) {
       throw error;
     } else {
-      res.status(200).json(results.rows);
+      return res.status(200).json(results.rows);
     }
   });
 };
 
 const getSingleAdmin = (req, res) => {
-  //   const str = `Select admin_name from admin where admin_id = ${req.params.id}`
-  //   res.send(req.params.id);
   pool.query(
     "Select * from admin where admin_id = $1",
     [req.params.id],
@@ -66,6 +65,7 @@ const login = async (req, res) => {
     } else {
       password = results.rows[0];
     }
+    
     const match = await bcrypt.compare(
       req.body.admin_password,
       password.admin_password
@@ -75,8 +75,8 @@ const login = async (req, res) => {
         {
           admin_name: req.body.admin_name,
         },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "15m" }
+        process.env.WEB_TOKEN,
+        { expiresIn: "1h" }
       );
       return res.status(200).json(accessToken);
     }
