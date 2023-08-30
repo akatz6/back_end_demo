@@ -3,6 +3,8 @@ const adminRoutes = require("./src/routes/adminRoutes");
 const playerRoutes = require("./src/routes/playerRoutes");
 const app = express();
 const PORT = 3000;
+const cors = require("cors");
+app.use(cors());
 
 app.use(express.json());
 
