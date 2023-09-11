@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const getPlayers = (req, res) => {
   const select = `select * from player`;
   pool.query(select, (error, results) => {
-    console.log(results.rows[0]);
     if (error) {
       throw error;
     } else {
@@ -40,7 +39,7 @@ const addNewPlayer = (req, res) => {
       const insert = `insert into player(player_name, first_name, last_name) values('${player_name}','${first_name}', '${last_name}')`;
       pool.query(insert, (err, results) => {
         if (err) {
-            return res.status(400).json(err["detail"]);
+          return res.status(400).json(err["detail"]);
         } else {
           return res.status(200).send("Insert into table");
         }
@@ -48,8 +47,31 @@ const addNewPlayer = (req, res) => {
     } catch (error) {
       return res.status(400).send(error.message);
     }
-  }else{
+  } else {
     return res.status(400).send("Authentication Error");
+  }
+};
+
+const editSinglePlayer = (req, res) => {
+  const bearer = req.headers.authorization;
+  if (bearer) {
+    const { player_name, first_name, last_name } = req.body;
+    if (!player_name || !first_name || !last_name) {
+      return res.status(400).send("You are missing data");
+    }
+    pool.query(
+      `update player set player_name = '${player_name}', first_name = '${first_name}', last_name = '${last_name}' where player_id = ${req.params.id}`,
+      (error, results) => {
+        if (error) {
+          throw error;
+        } else {
+          console.log(results.rows);
+          res.status(200).send(`${player_name} has been updated`);
+        }
+      }
+    );
+  } else {
+    res.status(400).send("Player not found");
   }
 };
 
@@ -57,4 +79,5 @@ module.exports = {
   getPlayers,
   getSinglePlayer,
   addNewPlayer,
+  editSinglePlayer,
 };
