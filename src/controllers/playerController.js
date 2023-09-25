@@ -31,12 +31,13 @@ const addNewPlayer = (req, res) => {
   if (bearer === 0 && req.headers.authorization) {
     token = req.headers.authorization.split(" ")[1];
     try {
+
       const decoded = jwt.verify(token, process.env.WEB_TOKEN);
-      const { player_name, first_name, last_name } = req.body;
+      const { player_name, first_name, last_name, img } = req.body;
       if (!player_name || !first_name || !last_name) {
         return res.status(400).send("You are missing data");
       }
-      const insert = `insert into player(player_name, first_name, last_name) values('${player_name}','${first_name}', '${last_name}')`;
+      const insert = `insert into player(player_name, first_name, last_name, img) values('${player_name}','${first_name}', '${last_name}', '${img}')`;
       pool.query(insert, (err, results) => {
         if (err) {
           return res.status(400).json(err["detail"]);
